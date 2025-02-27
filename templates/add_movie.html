@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Movie</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <h2>Add a New Movie</h2>
+
+    <form method="POST" action="{% url 'add_movie' %}">
+        {% csrf_token %}
+        <label>Title:</label>
+        <input type="text" name="title" required>
+
+        <label>Genre:</label>
+        <input type="text" name="genre" required>
+
+        <label>Year:</label>
+        <input type="number" name="year" required>
+
+        <label>Description:</label>
+        <textarea name="description" required></textarea>
+
+        <button type="submit">Done</button>
+    </form>
+
+    <a href="{% url 'movie_list' %}" class="back-link">⬅ Back to Movie List</a>
+
+</body>
+</html>
