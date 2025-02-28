@@ -106,6 +106,7 @@ Visit http://127.0.0.1:8000/ to access the app.
 * If you have already watched the suggestion, click "Add to database" to save it in the database.
 
 # 📌 Future Plans
-🚀 Make the logic of the code more readable, easier to understand and follow and overall optimizing the code and the logic
-Update the **Edit movie** tab
+- Make the logic of the code more readable, easier to understand and follow and overall optimizing the code and the logic
+- Update the **Edit movie** tab
+- Automate the adding of the movie, when the user enters the name of the movie the app automatically fetches data from TMDb and inserts it into the database
 
