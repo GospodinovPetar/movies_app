@@ -2,15 +2,54 @@
 
 A simple Django web application for managing a list of movies. Users can **add** movies manually or **generate** a movie with a button click.
 
-## 🚀 Features
-- ✅ Display a table of movies stored in the database  
-- ✅ Add new movies via a form  
-- ✅ Generate a **personalized** movie recommendation based on watched movies  
-- ✅ Ensure the **most-watched genre is prioritized** when generating movies  
-- ✅ Require a **secondary genre (if available)** for more accurate suggestions  
-- ✅ Prevent duplicate recommendations by checking existing movies  
-
 ![Photo of the App](https://media.discordapp.net/attachments/1242189564089466930/1345083433432649890/image.png?ex=67c34210&is=67c1f090&hm=1cdc22ce519d1d3a44cbf99746375d0741c0252fc59ad63795f83280b327d5a6&=&format=webp&quality=lossless&width=1100&height=630)
+
+# 📌 Algorithm Description & Why Movies App is Unique  
+
+The **Movies App** is an intelligent movie management system that allows users to store their **favorite films** and receive **personalized movie recommendations** based on their preferences. Unlike traditional static movie lists, this app **dynamically fetches recommendations from The Movie Database (TMDb)** and adapts based on the user's favorite genres.
+
+---
+
+## 🧠 How the Algorithm Works  
+
+### 1️⃣ **Analyzing User Preferences**  
+- The app **counts the genres** of all movies in the database.  
+- The **most frequently watched genre** is set as the **leading genre**.  
+- If a **second genre** exists, it is also considered to generate more relevant recommendations. (e.g If there are three movies (Horror, Horror, Comedy) the recommended movie would be a horror comedy)
+
+### 2️⃣ **Fetching the Best-Matching Movie**  
+- The app **queries TMDb's API** for **highly-rated movies** that match the identified genres.  
+- It **ensures the leading genre is dominant** in the recommended movie.  
+- The algorithm **avoids recommending movies that the user has already added** to prevent duplicates.  
+
+### 3️⃣ **Displaying the Best Recommendation**  
+- The selected movie is presented with:  
+  - ✅ **Title**  
+  - ✅ **Release year**  
+  - ✅ **Genre(s)**  
+  - ✅ **IMDb-style rating**  
+  - ✅ **A direct link to its TMDb page**  
+  - ✅ **A movie poster for an enhanced user experience**  
+
+---
+
+## 🚀 What Makes It Unique?  
+
+### ✅ **Personalized Recommendations**  
+- The app **learns from the user’s preferences** and suggests **truly relevant films** instead of random recommendations.  
+
+### ✅ **Dynamic & Real-Time Suggestions**  
+- The system **updates recommendations instantly** whenever a new movie is added to the user's favorites.  
+
+### ✅ **TMDb-Powered Data**  
+- Instead of relying on a static dataset, the app **fetches fresh and highly-rated movies from TMDb**, ensuring **relevant suggestions**.  
+
+### ✅ **No Duplicates & Smarter Genre Matching**  
+- The algorithm ensures **already-watched movies are not recommended again** and **prioritizes the correct leading genre**.  
+
+### ✅ **Simple Yet Powerful**  
+- The app **automates movie discovery** without requiring users to manually search for recommendations.  
+
 ---
 
 ## 📌 Installation
