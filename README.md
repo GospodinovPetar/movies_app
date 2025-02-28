@@ -3,10 +3,12 @@
 A simple Django web application for managing a list of movies. Users can **add** movies manually or **generate** a movie with a button click.
 
 ## 🚀 Features
-- ✅ Display a table of movies
-- ✅ Add new movies via a form
-- ✅ Generate a movie using a predefined function
-- ✅ Responsive and modern design with CSS styling
+- ✅ Display a table of movies stored in the database  
+- ✅ Add new movies via a form  
+- ✅ Generate a **personalized** movie recommendation based on watched movies  
+- ✅ Ensure the **most-watched genre is prioritized** when generating movies  
+- ✅ Require a **secondary genre (if available)** for more accurate suggestions  
+- ✅ Prevent duplicate recommendations by checking existing movies  
 
 ---
 
@@ -51,12 +53,10 @@ Visit http://127.0.0.1:8000/ to access the app.
 * Click Done, and the movie will appear in the list.
 ## 🔄 Generating a Movie
 * Click the "Generate Movie" button.
-* A movie will be added to the list using a predefined function.
+* The system analyzes your most-watched genres and fetches a highly-rated movie from The Movie Database (TMDb).
+* The recommended movie will be displayed with a link to its TMDb page.
+* If you like the suggestion, click "Add to watched already" to save it in the database.
 
 # 📌 Future Plans
-🚀 In upcoming updates, I plan to implement a smart movie generation algorithm that will:
-* Analyze existing movies in the database to understand the user's movie taste.
-* Connect to the OMDb API to fetch movies from a larger dataset.
-* Suggest a movie that best matches user preferences based on patterns in previously added movies.
-* Provide an option for users to rate generated movies to further refine recommendations.
-This will transform the "Generate Movie" feature into an intelligent personalized movie suggestion system. Stay tuned! 🎬✨
+🚀 In upcoming updates, I plan to implement a drop down menu to choose the genres of the movies you add.
+Furthermore I plan to fix the 'Unknown' genre after you add the movie to the database after clicking 'Add to "Watched already"' button.
