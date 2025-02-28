@@ -1,5 +1,7 @@
 from collections import Counter
 import requests
+from django.shortcuts import get_object_or_404, redirect, render
+
 from movies_app.models import Movie
 
 # TMDb API Configuration
@@ -16,6 +18,25 @@ def add_movie_to_db(title, genre, year, description):
         description = description
     )
 
+def edit_movie(request, movie_id):
+    """Edits a movie's details."""
+    movie = get_object_or_404(Movie, id=movie_id)
+
+    if request.method == "POST":
+        movie.title = request.POST["title"]
+        movie.genre = request.POST["genre"]
+        movie.year = int(request.POST["year"])
+        movie.description = request.POST["description"]
+        movie.save()
+        return redirect("movie_list")
+
+    return render(request, "edit_movie.html", {"movie": movie})
+
+def delete_movie(request, movie_id):
+    """Deletes a movie from the database."""
+    movie = get_object_or_404(Movie, id=movie_id)
+    movie.delete()
+    return redirect("movie_list")
 
 def get_top_genres():
     """Finds the most frequently watched genres from stored movies."""

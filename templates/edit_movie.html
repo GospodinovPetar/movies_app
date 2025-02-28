@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Edit Movie</title>
+</head>
+<body>
+
+    <h2>Edit Movie</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label>Title:</label>
+        <input type="text" name="title" value="{{ movie.title }}" required>
+
+        <label>Genre:</label>
+        <select name="genre" required>
+            <option value="{{ movie.genre }}" selected>{{ movie.genre }}</option>
+            <option>Action</option>
+            <option>Adventure</option>
+            <option>Animation</option>
+            <option>Comedy</option>
+            <option>Crime</option>
+            <option>Documentary</option>
+            <option>Drama</option>
+            <option>Family</option>
+            <option>Fantasy</option>
+            <option>History</option>
+            <option>Horror</option>
+            <option>Music</option>
+            <option>Mystery</option>
+            <option>Romance</option>
+            <option>Science Fiction</option>
+            <option>TV Movie</option>
+            <option>Thriller</option>
+            <option>War</option>
+            <option>Western</option>
+        </select>
+
+        <label>Year:</label>
+        <input type="number" name="year" value="{{ movie.year }}" required>
+
+        <label>Description:</label>
+        <textarea name="description">{{ movie.description }}</textarea>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <a href="{% url 'movie_list' %}">Back to Movie List</a>
+
+</body>
+</html>
