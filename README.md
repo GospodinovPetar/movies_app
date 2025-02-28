@@ -1,54 +1,62 @@
 # 🎬 Movies App
 
-A simple Django web application for managing a list of movies. Users can **add** movies manually or **generate** a movie with a button click.
+A simple Django web application for managing a list of movies. Users can **add** movies manually with up to three genres (where the primary genre is required, and secondary and third genres are optional) or **generate** a personalized movie recommendation with a single button click. The recommendation system analyzes your movie collection and fetches a highly-rated movie from The Movie Database (TMDb) that matches your dominant genre combination.
 
-![Photo of the App](https://media.discordapp.net/attachments/1242189564089466930/1345103630193266688/image.png?ex=67c354e0&is=67c20360&hm=cc0e7d390a34331132d418e38b1bb011cd985e7764939ed8b1f288cd10e9adfc&=&format=webp&quality=lossless&width=2552&height=1302)
+![Photo of the App](https://media.discordapp.net/attachments/690121529891094559/1345126292768423997/image.png?ex=67c369fb&is=67c2187b&hm=c97dda1aee1728b2a4fdc7d1123a80196d6cf3d5729bc0cf2c610a129fb154d4&=&format=webp&quality=lossless&width=2580&height=1302)
 
-# 📌 Algorithm Description & Why Movies App is Unique  
+# 📌 Algorithm Description & Why Movies App is Unique
 
-The **Movies App** is an intelligent movie management system that allows users to store their **favorite films** and receive **personalized movie recommendations** based on their preferences. Unlike traditional static movie lists, this app **dynamically fetches recommendations from The Movie Database (TMDb)** and adapts based on the user's favorite genres.
-
----
-
-## 🧠 How the Algorithm Works  
-
-### 1️⃣ **Analyzing User Preferences**  
-- The app **counts the genres** of all movies in the database.  
-- The **most frequently watched genre** is set as the **leading genre**.  
-- If a **second genre** exists, it is also considered to generate more relevant recommendations. (e.g If there are three movies (Horror, Horror, Comedy) the recommended movie would be a horror comedy)
-
-### 2️⃣ **Fetching the Best-Matching Movie**  
-- The app **queries TMDb's API** for **highly-rated movies** that match the identified genres.  
-- It **ensures the leading genre is dominant** in the recommended movie.  
-- The algorithm **avoids recommending movies that the user has already added** to prevent duplicates.  
-
-### 3️⃣ **Displaying the Best Recommendation**  
-- The selected movie is presented with:  
-  - **Title**  
-  - **Release year**  
-  - **Genre(s)**  
-  - **IMDb-style rating**  
-  - **A direct link to its TMDb page**  
-  - **A movie poster for an enhanced user experience**  
+The **Movies App** is an intelligent movie management system that not only lets you maintain your collection of favorite films but also provides **tailored movie recommendations** based on your watching habits. The app analyzes each movie’s genres—giving extra weight to the primary genre—to understand your true taste, and then it queries TMDb to find a movie that best matches this dominant combination.
 
 ---
 
-## 🚀 What Makes It Unique?  
+## 🧠 How the Algorithm Works
 
-### **Personalized Recommendations**  
-- The app **learns from the user’s preferences** and suggests **truly relevant films** instead of random recommendations.  
+### 1️⃣ Analyzing User Preferences
+- The app scans all movies in your database and **counts the genres** used in each movie.
+- It gives **extra weight to the primary genre** (the genre you set as most important when adding a movie).
+- From this analysis, the app determines your **dominant genre combination**.  
+  *Example:*  
+  - Movie 1: **Primary:** Animation, **Secondary:** Sci-Fi, **Third:** Horror  
+  - Movie 2: **Primary:** Horror, **Secondary:** Drama, **Third:** Comedy  
+  - Movie 3: **Primary:** Animation, **Secondary:** Horror, **Third:** Sci-Fi  
+  In this case, **Animation** is the most frequent primary genre, and the best pairing comes out as **(Animation, Horror, Sci-Fi)**.
 
-### **Dynamic & Real-Time Suggestions**  
-- The system **updates recommendations instantly** whenever a new movie is added to the user's favorites.  
+### 2️⃣ Fetching the Best-Matching Movie
+- The app **queries TMDb’s API** for highly-rated movies that match your dominant genre combination.
+- It **ensures that the primary genre (the one you watch most) is dominant** in the recommended movie.
+- It also considers the secondary and third genres, so if your favorites are, say, Animation, Horror, and Sci-Fi, it searches for movies that have all three.
+- The algorithm **avoids suggesting movies you’ve already added** to your collection.
 
-### **TMDb-Powered Data**  
-- Instead of relying on a static dataset, the app **fetches fresh and highly-rated movies from TMDb**, ensuring **relevant suggestions**.  
+### 3️⃣ Displaying the Best Recommendation
+- The recommended movie is presented with:
+  - **Title**
+  - **Release Year**
+  - **Genre(s):** (The primary genre is prominently displayed, with secondary and third genres shown only if available.)
+  - **IMDb-style Rating**
+  - **A Direct Link to its TMDb Page**
+  - **A Movie Poster** for a richer, more engaging experience
 
-### **No Duplicates & Smarter Genre Matching**  
-- The algorithm ensures **already-watched movies are not recommended again** and **prioritizes the correct leading genre**.  
+---
 
-### **Simple Yet Powerful**  
-- The app **automates movie discovery** without requiring users to manually search for recommendations.  
+## 🚀 What Makes It Unique?
+
+### Personalized Recommendations
+- The app **learns from your movie collection** and suggests films that truly match your taste rather than generic, one-size-fits-all recommendations.
+
+### Dynamic & Real-Time Suggestions
+- As you add new movies, the system **updates recommendations instantly**, ensuring your suggestions always reflect your current preferences.
+
+### TMDb-Powered Data
+- By fetching live data from TMDb, the app provides **fresh and highly-rated movie suggestions** rather than relying on a static dataset.
+
+### No Duplicates & Smarter Genre Matching
+- The algorithm is designed to **avoid recommending movies you've already seen**, ensuring a continuous stream of new and interesting films.
+- A **weighted approach** guarantees that your primary genre (your core taste) always takes precedence over secondary influences.
+
+### Simple Yet Powerful
+- With an intuitive design, adding movies and viewing recommendations is straightforward—**automating movie discovery** in a fun, efficient way.
+
 
 ---
 
@@ -95,8 +103,7 @@ Visit http://127.0.0.1:8000/ to access the app.
 * Click the "Generate Movie" button.
 * The system analyzes your most-watched genres and fetches a highly-rated movie from The Movie Database (TMDb).
 * The recommended movie will be displayed with a link to its TMDb page.
-* If you have already watched the suggestion, click "Add to watched already" to save it in the database.
+* If you have already watched the suggestion, click "Add to database" to save it in the database.
 
 # 📌 Future Plans
-🚀 In upcoming updates, I plan to implement adding multiple genres to the films you watch, primary and secondary and optimizing the algorithm.
-Algorithm not working as intended
+🚀 Make the logic of the code more readable, easier to understand and follow and overall optimizing the code and the logic
