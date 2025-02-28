@@ -1,34 +1,54 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>Add a Movie</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 
-    <h2>Add a New Movie</h2>
+    <h2>Add a Movie</h2>
 
-    <form method="POST" action="{% url 'add_movie' %}">
-        {% csrf_token %}
+    <form method="post">
         <label>Title:</label>
         <input type="text" name="title" required>
 
         <label>Genre:</label>
-        <input type="text" name="genre" required>
+        <select name="genre" required>
+            <option value="" disabled selected>Select a genre</option>
+            <option>Action</option>
+            <option>Adventure</option>
+            <option>Animation</option>
+            <option>Comedy</option>
+            <option>Crime</option>
+            <option>Documentary</option>
+            <option>Drama</option>
+            <option>Family</option>
+            <option>Fantasy</option>
+            <option>History</option>
+            <option>Horror</option>
+            <option>Music</option>
+            <option>Mystery</option>
+            <option>Romance</option>
+            <option>Science Fiction</option>
+            <option>TV Movie</option>
+            <option>Thriller</option>
+            <option>War</option>
+            <option>Western</option>
+        </select>
 
         <label>Year:</label>
         <input type="number" name="year" required>
 
         <label>Description:</label>
-        <textarea name="description" required></textarea>
+        <textarea name="description"></textarea>
 
-        <button type="submit">Done</button>
+        <button type="submit">Add Movie</button>
     </form>
 
-    <a href="{% url 'movie_list' %}" class="back-link">⬅ Back to Movie List</a>
+    <a href="{% url 'movie_list' %}">Back to Movie List</a>
 
 </body>
 </html>
