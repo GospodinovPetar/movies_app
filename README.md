@@ -2,7 +2,7 @@
 
 A simple Django web application for managing a list of movies. Users can **add** movies manually or **generate** a movie with a button click.
 
-![Photo of the App](https://media.discordapp.net/attachments/1242189564089466930/1345083433432649890/image.png?ex=67c34210&is=67c1f090&hm=1cdc22ce519d1d3a44cbf99746375d0741c0252fc59ad63795f83280b327d5a6&=&format=webp&quality=lossless&width=1100&height=630)
+![Photo of the App](https://media.discordapp.net/attachments/1242189564089466930/1345103630193266688/image.png?ex=67c354e0&is=67c20360&hm=cc0e7d390a34331132d418e38b1bb011cd985e7764939ed8b1f288cd10e9adfc&=&format=webp&quality=lossless&width=2552&height=1302)
 
 # 📌 Algorithm Description & Why Movies App is Unique  
 
