@@ -139,12 +139,15 @@ def generate_movie(request):
     )
 
     if recommended_movie:
+        poster_path = recommended_movie.get("poster_path")
+        poster_url = f"https://image.tmdb.org/t/p/w500{poster_path}" if poster_path else None
         request.session["recommended_movie"] = {
             "title": recommended_movie["title"],
             "year": recommended_movie.get("release_date", "Unknown")[:4],
             "rating": recommended_movie.get("vote_average", "N/A"),
             "tmdb_url": f"https://www.themoviedb.org/movie/{recommended_movie['id']}",
             "overview": recommended_movie.get("overview", "No description available."),
+            "poster_url": poster_url if poster_url else None
         }
     else:
         request.session["recommended_movie"] = None

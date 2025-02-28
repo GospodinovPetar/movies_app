@@ -40,9 +40,13 @@
     <div class="recommended-movie">
         <h3>🎥 Recommended Movie:</h3>
         <p><strong>Title:</strong> <a href="{{ recommended_movie.tmdb_url }}" target="_blank">{{ recommended_movie.title }}</a> ({{ recommended_movie.year }})</p>
+        {% if recommended_movie.poster_url %}
+            <img src="{{ recommended_movie.poster_url }}" alt="Movie Poster" style="width:200px; border-radius:10px;">
+        {% else %}
+            <p>No poster available.</p>
+        {% endif %}
         <p><strong>Rating:</strong> ⭐ {{ recommended_movie.rating }}</p>
-        <p><strong>Overview:</strong> {{ recommended_movie.overview }}</p>
-        <a href="{% url 'add_movie_to_list' %}" class="button-link">Add to "watched already"</a>
+        <a href="{% url 'add_movie_to_list' %}" class="button-link">Add to database</a>
     </div>
     {% else %}
         <h3>There is no information about the movies you watch. <br> I can't recommend anything without prior information.</h3>
