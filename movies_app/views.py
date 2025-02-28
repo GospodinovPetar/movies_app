@@ -30,17 +30,19 @@ def add_movie_to_list(request):
     recommended_movie = request.session.get("recommended_movie", None)
 
     if recommended_movie:
+        # Extract only the primary genre (first genre from the list)
+        primary_genre = recommended_movie["genre"].split(", ")[0]  # ✅ Take only the first genre
+
         # Ensure the movie isn't already in the database
         if not Movie.objects.filter(title=recommended_movie["title"]).exists():
             Movie.objects.create(
-                title = recommended_movie["title"],
-                genre=recommended_movie["genre"],  # TMDb API doesn't provide genre names directly
-                year = recommended_movie["year"],
-                description = recommended_movie["overview"]
+                title=recommended_movie["title"],
+                genre=primary_genre,  # ✅ Save only the primary genre
+                year=recommended_movie["year"],
+                description=recommended_movie["overview"]
             )
-            print(f"Movie '{recommended_movie['title']}' added to the database.")
 
-        # Clear the recommended movie from the session
+        # Remove the recommended movie from session
         request.session.pop("recommended_movie", None)
 
     return redirect("movie_list")
