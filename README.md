@@ -107,3 +107,5 @@ Visit http://127.0.0.1:8000/ to access the app.
 
 # 📌 Future Plans
 🚀 Make the logic of the code more readable, easier to understand and follow and overall optimizing the code and the logic
+Update the **Edit movie** tab
+
