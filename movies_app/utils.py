@@ -141,9 +141,14 @@ def generate_movie(request):
     if recommended_movie:
         poster_path = recommended_movie.get("poster_path")
         poster_url = f"https://image.tmdb.org/t/p/w500{poster_path}" if poster_path else None
+        movie_details = requests.get(f"{TMDB_BASE_URL}/movie/{recommended_movie['id']}",
+                                     params={"api_key": TMDB_API_KEY}).json()
+        genres = [g["name"] for g in movie_details.get("genres", [])]
+        genre_str = ", ".join(genres) if genres else "Unknown"
         request.session["recommended_movie"] = {
             "title": recommended_movie["title"],
             "year": recommended_movie.get("release_date", "Unknown")[:4],
+            "genre": genre_str,
             "rating": recommended_movie.get("vote_average", "N/A"),
             "tmdb_url": f"https://www.themoviedb.org/movie/{recommended_movie['id']}",
             "overview": recommended_movie.get("overview", "No description available."),

@@ -34,7 +34,7 @@ def add_movie_to_list(request):
         if not Movie.objects.filter(title=recommended_movie["title"]).exists():
             Movie.objects.create(
                 title = recommended_movie["title"],
-                genre = "Unknown",  # TMDb API doesn't provide genre names directly
+                genre=recommended_movie["genre"],  # TMDb API doesn't provide genre names directly
                 year = recommended_movie["year"],
                 description = recommended_movie["overview"]
             )
