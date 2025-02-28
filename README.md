@@ -10,6 +10,7 @@ A simple Django web application for managing a list of movies. Users can **add**
 - ✅ Require a **secondary genre (if available)** for more accurate suggestions  
 - ✅ Prevent duplicate recommendations by checking existing movies  
 
+![Photo of the App](https://media.discordapp.net/attachments/1242189564089466930/1345083433432649890/image.png?ex=67c34210&is=67c1f090&hm=1cdc22ce519d1d3a44cbf99746375d0741c0252fc59ad63795f83280b327d5a6&=&format=webp&quality=lossless&width=1100&height=630)
 ---
 
 ## 📌 Installation
