@@ -44,7 +44,7 @@
         <p><strong>Overview:</strong> {{ recommended_movie.overview }}</p>
         <a href="{% url 'add_movie_to_list' %}" class="button-link">Add to "watched already"</a>
     </div>
-        {% else %}
+    {% else %}
         <h3>There is no information about the movies you watch. <br> I can't recommend anything without prior information.</h3>
     {% endif %}
 </body>
