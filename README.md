@@ -58,5 +58,4 @@ Visit http://127.0.0.1:8000/ to access the app.
 * If you have already watched the suggestion, click "Add to watched already" to save it in the database.
 
 # 📌 Future Plans
-🚀 In upcoming updates, I plan to implement a drop down menu to choose the genres of the movies you add.
-Furthermore I plan to fix the 'Unknown' genre after you add the movie to the database after clicking 'Add to "Watched already"' button.
+🚀 In upcoming updates, I plan to fix the 'Unknown' genre after you add the movie to the database after clicking 'Add to "Watched already"' button.
