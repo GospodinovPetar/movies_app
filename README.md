@@ -99,3 +99,4 @@ Visit http://127.0.0.1:8000/ to access the app.
 
 # 📌 Future Plans
 🚀 In upcoming updates, I plan to implement adding multiple genres to the films you watch, primary and secondary and optimizing the algorithm.
+Algorithm not working as intended
