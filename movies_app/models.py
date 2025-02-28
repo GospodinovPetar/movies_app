@@ -24,7 +24,9 @@ class Movie(models.Model):
         ("Western", "Western"),
     ]
     title = models.CharField(max_length=255)
-    genre = models.CharField(max_length=100, choices = GENRE_CHOICES) #TODO make a dropdown menu with the genres supported
+    primary_genre = models.CharField(max_length=50, choices=GENRE_CHOICES)  # Required
+    secondary_genre = models.CharField(max_length=50, choices=GENRE_CHOICES, blank=True, null=True)  # Optional
+    third_genre = models.CharField(max_length=50, choices=GENRE_CHOICES, blank=True, null=True)  # Optional
     year = models.IntegerField()
     description = models.TextField()
 
