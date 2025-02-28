@@ -55,7 +55,7 @@ Visit http://127.0.0.1:8000/ to access the app.
 * Click the "Generate Movie" button.
 * The system analyzes your most-watched genres and fetches a highly-rated movie from The Movie Database (TMDb).
 * The recommended movie will be displayed with a link to its TMDb page.
-* If you like the suggestion, click "Add to watched already" to save it in the database.
+* If you have already watched the suggestion, click "Add to watched already" to save it in the database.
 
 # 📌 Future Plans
 🚀 In upcoming updates, I plan to implement a drop down menu to choose the genres of the movies you add.
