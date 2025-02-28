@@ -12,6 +12,7 @@
     <h2>Add a Movie</h2>
 
     <form method="post">
+        {% csrf_token %}
         <label>Title:</label>
         <input type="text" name="title" required>
 
