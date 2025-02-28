@@ -24,30 +24,30 @@ The **Movies App** is an intelligent movie management system that allows users t
 
 ### 3️⃣ **Displaying the Best Recommendation**  
 - The selected movie is presented with:  
-  - ✅ **Title**  
-  - ✅ **Release year**  
-  - ✅ **Genre(s)**  
-  - ✅ **IMDb-style rating**  
-  - ✅ **A direct link to its TMDb page**  
-  - ✅ **A movie poster for an enhanced user experience**  
+  - **Title**  
+  - **Release year**  
+  - **Genre(s)**  
+  - **IMDb-style rating**  
+  - **A direct link to its TMDb page**  
+  - **A movie poster for an enhanced user experience**  
 
 ---
 
 ## 🚀 What Makes It Unique?  
 
-### ✅ **Personalized Recommendations**  
+### **Personalized Recommendations**  
 - The app **learns from the user’s preferences** and suggests **truly relevant films** instead of random recommendations.  
 
-### ✅ **Dynamic & Real-Time Suggestions**  
+### **Dynamic & Real-Time Suggestions**  
 - The system **updates recommendations instantly** whenever a new movie is added to the user's favorites.  
 
-### ✅ **TMDb-Powered Data**  
+### **TMDb-Powered Data**  
 - Instead of relying on a static dataset, the app **fetches fresh and highly-rated movies from TMDb**, ensuring **relevant suggestions**.  
 
-### ✅ **No Duplicates & Smarter Genre Matching**  
+### **No Duplicates & Smarter Genre Matching**  
 - The algorithm ensures **already-watched movies are not recommended again** and **prioritizes the correct leading genre**.  
 
-### ✅ **Simple Yet Powerful**  
+### **Simple Yet Powerful**  
 - The app **automates movie discovery** without requiring users to manually search for recommendations.  
 
 ---
