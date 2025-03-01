@@ -4,7 +4,7 @@ A simple Django web application for managing a list of movies. Users can **add**
 
 ![Photo of the App](https://media.discordapp.net/attachments/690121529891094559/1345126292768423997/image.png?ex=67c369fb&is=67c2187b&hm=c97dda1aee1728b2a4fdc7d1123a80196d6cf3d5729bc0cf2c610a129fb154d4&=&format=webp&quality=lossless&width=2580&height=1302)
 
-# 📌 Algorithm Description & Why Movies App is Unique
+# 📌 Algorithm Description
 
 The **Movies App** is an intelligent movie management system that not only lets you maintain your collection of favorite films but also provides **tailored movie recommendations** based on your watching habits. The app analyzes each movie’s genres—giving extra weight to the primary genre—to understand your true taste, and then it queries TMDb to find a movie that best matches this dominant combination.
 
