@@ -1,64 +1,81 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie List</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Movies List</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-
-    <h2>Movie List</h2>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Year</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for movie in movies %}
-                <tr>
-                    <td>{{ movie.title }}</td>
-                    <td>
-                    {{ movie.primary_genre }}
-                    {% if movie.secondary_genre %}, {{ movie.secondary_genre }}{% endif %}
-                    {% if movie.third_genre %}, {{ movie.third_genre }}{% endif %}
-                    </td>
-                    <td>{{ movie.year }}</td>
-                    <td>{{ movie.description }}</td>
-                    <td>
-                        <a href="{% url 'edit_movie' movie.id %}" class = 'button-link'>Edit</a>
-                        <a href="{% url 'delete_movie' movie.id %}" onclick="return confirm('Are you sure you want to delete this movie?')" class = 'button-link'>Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{% url 'add_movie' %}" class="button-link">Add a Movie</a>
-    <a href="{% url 'generate_movie' %}" class="button-link">Generate Movie</a>
-
-
+    <h1>Movies</h1>
     {% if movies %}
-    <div class="recommended-movie">
-        <h3>🎥 Recommended Movie:</h3>
-        <p><strong>Title:</strong> <a href="{{ recommended_movie.tmdb_url }}" target="_blank">{{ recommended_movie.title }}</a> ({{ recommended_movie.year }})</p>
-        {% if recommended_movie.poster_url %}
-            <img src="{{ recommended_movie.poster_url }}" alt="Movie Poster" style="width:200px; border-radius:10px;">
-        {% else %}
-            <p>No poster available.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Genres</th>
+                    <th>Year</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movie in movies %}
+                    <tr>
+                        <td>{{ movie.title }}</td>
+                        <td>
+                            {{ movie.primary_genre }}
+                            {% if movie.secondary_genre %}, {{ movie.secondary_genre }}{% endif %}
+                            {% if movie.third_genre %}, {{ movie.third_genre }}{% endif %}
+                        </td>
+                        <td>{{ movie.year }}</td>
+                        <td>{{ movie.description }}</td>
+                        <td>
+                            <a href="{% url 'edit_movie' movie.id %}" class = "button-link">Edit</a> |
+                            <a href="{% url 'delete_movie' movie.id %}" class = "button-link" onclick="return confirm('Are you sure?');">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination Controls -->
+        {% if movies.has_other_pages %}
+        <div class="pagination">
+            {% if movies.has_previous %}
+                <a class = "button-link" href="?page={{ movies.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span>Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
+
+            {% if movies.has_next %}
+                <a class = "button-link" href="?page={{ movies.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
         {% endif %}
-        <p><strong>Rating:</strong> ⭐ {{ recommended_movie.rating }}</p>
-        <a href="{% url 'add_movie_to_list' %}" class="button-link">Add to database</a>
-    </div>
+
     {% else %}
-        <h3>There is no information about the movies you watch. <br> I can't recommend anything without prior information.</h3>
+        <p>No movies in the database.</p>
+    {% endif %}
+
+    <a class = "button-link" href="{% url 'add_movie' %}">Add Movie</a> |
+    <a class = "button-link" href="{% url 'generate_movie' %}">Generate Movie</a>
+
+    {% if recommended_movie %}
+    <div class="recommended-movie">
+        <h2>Recommended Movie</h2>
+        <p><strong>Title:</strong> <a href="{{ recommended_movie.tmdb_url }}" target="_blank">{{ recommended_movie.title }}</a></p>
+        {% if recommended_movie.poster_url %}
+            <img src="{{ recommended_movie.poster_url }}" alt="Movie Poster" style="width:200px;">
+        {% endif %}
+        <p><strong>Year:</strong> {{ recommended_movie.year }}</p>
+        <p><strong>Rating:</strong> {{ recommended_movie.rating }}</p>
+        <p><strong>Overview:</strong> {{ recommended_movie.overview }}</p>
+
+        <a class = "button-link" href="{% url 'add_movie_to_list' %}">Add to Watched</a>
+    </div>
+        {% else %}
+        <h3>Sorry I can't recommend you a movie <br> without prior knowledge of your taste.</h3>
     {% endif %}
 </body>
 </html>

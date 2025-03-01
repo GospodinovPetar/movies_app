@@ -63,92 +63,125 @@ def get_genre_ids(genres):
 
 def get_best_movie(leading_genre_id, secondary_genre_id=None, third_genre_id=None):
     """
-    Query TMDb to get the best-rated movie that matches the given genre IDs.
-    This function enforces that the leading genre is dominant.
+    Attempts to find the best-rated movie from TMDb using a three-tier fallback:
+      1) Triple match: All three genres are present, and the movie's first genre equals the leading genre.
+      2) Double match: Leading and secondary genres are present (ignoring order).
+      3) Single match: Leading genre is present.
+    Returns the first valid match, or None if nothing is found.
     """
     if not leading_genre_id:
         return None
 
-    params = {
-        "api_key": TMDB_API_KEY,
-        "language": "en-US",
-        "sort_by": "vote_average.desc",
-        "vote_count.gte": 100,
-        "with_genres": str(leading_genre_id)
-    }
+    # Helper: searches TMDb given a list of required genre IDs.
+    def discover_movies(required_ids):
+        # Build the 'with_genres' parameter (e.g. "28,35,878")
+        with_genres_str = ",".join(str(g) for g in required_ids)
+        params = {
+            "api_key": TMDB_API_KEY,
+            "language": "en-US",
+            "sort_by": "vote_average.desc",
+            "vote_count.gte": 100,
+            "with_genres": with_genres_str
+        }
+        response = requests.get(f"{TMDB_BASE_URL}/discover/movie", params=params)
+        if response.status_code != 200:
+            return None
+        movies = response.json().get("results", [])
+        existing_titles = set(Movie.objects.values_list("title", flat=True))
+        strict_candidate = None  # relaxed candidate
 
-    if secondary_genre_id:
-        params["with_genres"] += f",{secondary_genre_id}"
+        for movie in movies:
+            # Fetch full details to get the movie's genre list (as IDs)
+            details_resp = requests.get(f"{TMDB_BASE_URL}/movie/{movie['id']}",
+                                        params={"api_key": TMDB_API_KEY})
+            if details_resp.status_code != 200:
+                continue
+            details = details_resp.json()
+            movie_genres = [g["id"] for g in details.get("genres", [])]
+            # Strict check: first genre must equal the leading desired genre and all required are present
+            if movie_genres and movie_genres[0] == required_ids[0] and set(required_ids).issubset(movie_genres):
+                if movie["title"] not in existing_titles:
+                    return movie
+            # Otherwise, if the relaxed check passes (all required present regardless of order)
+            if set(required_ids).issubset(movie_genres) and movie["title"] not in existing_titles:
+                if strict_candidate is None:
+                    strict_candidate = movie
+        return strict_candidate
 
-    if third_genre_id:
-        params["with_genres"] += f",{third_genre_id}"
-
-    response = requests.get(f"{TMDB_BASE_URL}/discover/movie", params=params)
-
-    if response.status_code != 200:
-        return None
-
-    movies = response.json().get("results", [])
-    existing_titles = set(Movie.objects.values_list("title", flat=True))
-
-    for movie in movies:
-        # Get detailed movie info to verify genre ordering
-        details_resp = requests.get(f"{TMDB_BASE_URL}/movie/{movie['id']}", params={"api_key": TMDB_API_KEY})
-
-        if details_resp.status_code != 200:
-            continue
-
-        details = details_resp.json()
-        movie_genre_ids = [g["id"] for g in details.get("genres", [])]
-
-        if movie_genre_ids and movie_genre_ids[0] == leading_genre_id and movie["title"] not in existing_titles:
+    # 1) Try triple: leading, secondary, third (if available)
+    if secondary_genre_id and third_genre_id:
+        triple_ids = [leading_genre_id, secondary_genre_id, third_genre_id]
+        movie = discover_movies(triple_ids)
+        if movie:
             return movie
 
-    return None
+    # 2) Fallback: Try double: leading + secondary (if available)
+    if secondary_genre_id:
+        double_ids = [leading_genre_id, secondary_genre_id]
+        movie = discover_movies(double_ids)
+        if movie:
+            return movie
+
+    # 3) Fallback: Try single: leading only
+    single_ids = [leading_genre_id]
+    return discover_movies(single_ids)
 
 
 def generate_movie(request):
     """
-    Generate a recommended movie based on the user's watched movies.
-    The recommendation is stored in the session.
+    Generates a recommended movie based on the user's movie collection.
+    If the database is empty, sets an error message instead.
     """
-    primary, secondary, third = get_top_genres()
-
-    if not primary:
+    # Check if there are any movies in the database
+    from .models import Movie  # Ensure we have access to Movie model here
+    if not Movie.objects.exists():
         request.session["recommended_movie"] = None
+        request.session["recommendation_error"] = (
+            "Sorry, I can't generate a movie without prior knowledge of your movie taste."
+        )
         return
 
-    # Get the corresponding TMDb genre IDs (ignore empty strings)
-    genre_ids = get_genre_ids([g for g in [primary, secondary, third] if g])
+    # Clear any previous error message
+    request.session.pop("recommendation_error", None)
 
+    # Get the dominant genre combination from the entire DB
+    primary, secondary, third = get_top_genres()
+    if not primary:
+        request.session["recommended_movie"] = None
+        request.session["recommendation_error"] = (
+            "Sorry, I can't generate a movie without prior knowledge of your movie taste."
+        )
+        return
+
+    # Convert non-empty genre names to TMDb IDs
+    desired_genres = [g for g in [primary, secondary, third] if g]
+    genre_ids = get_genre_ids(desired_genres)
     if not genre_ids:
         request.session["recommended_movie"] = None
         return
 
-    recommended = get_best_movie(
-        genre_ids[0],
-        genre_ids[1] if len(genre_ids) > 1 else None,
-        genre_ids[2] if len(genre_ids) > 2 else None
-    )
+    # Assign IDs: primary is mandatory, secondary and third if available
+    primary_id = genre_ids[0]
+    secondary_id = genre_ids[1] if len(genre_ids) > 1 else None
+    third_id = genre_ids[2] if len(genre_ids) > 2 else None
 
-    if recommended:
-        poster_path = recommended.get("poster_path")
-        poster_url = f"https://image.tmdb.org/t/p/w500{poster_path}" if poster_path else None
-
-        # Store the TMDb ID for later genre-fetching when adding the movie
+    candidate = get_best_movie(primary_id, secondary_id, third_id)
+    if candidate:
+        poster_path = candidate.get("poster_path")
+        poster_url = f"https://image.tmdb.org/t/p/w500{poster_path}" if poster_path else ""
         request.session["recommended_movie"] = {
-            "tmdb_id": recommended["id"],
-            "title": recommended["title"],
-            "year": recommended.get("release_date", "Unknown")[:4],
-            "rating": recommended.get("vote_average", "N/A"),
-            "tmdb_url": f"https://www.themoviedb.org/movie/{recommended['id']}",
-            "overview": recommended.get("overview", "No description available."),
+            "tmdb_id": candidate["id"],
+            "title": candidate["title"],
+            "year": candidate.get("release_date", "Unknown")[:4],
+            "rating": candidate.get("vote_average", "N/A"),
+            "tmdb_url": f"https://www.themoviedb.org/movie/{candidate['id']}",
+            "overview": candidate.get("overview", "No description available."),
             "poster_url": poster_url,
-            "genre": primary  # For display purposes, store only the primary genre here
+            "genre": primary  # for display purposes, show only the primary genre
         }
-
     else:
         request.session["recommended_movie"] = None
+
 
 def add_movie_to_db(title, genre, year, description):
     """Creates and saves a new movie entry in the database."""
