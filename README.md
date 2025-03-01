@@ -68,25 +68,25 @@ git clone https://github.com/GospodinovPetar/movies_app.git
 cd movies_app
 ```
 
-## Set Up a Virtual Environment (Optional but Recommended)
+## 2️⃣ Set Up a Virtual Environment (Optional but Recommended)
 ```bash
 python -m venv venv
 source venv/bin/activate  # On macOS/Linux
 venv\Scripts\activate  # On Windows
 ```
 
-## Install Dependencies
+## 3️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-## Apply Migrations
+## 4️⃣ Apply Migrations
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-## Run the server
+## 5️⃣ Run the server
 ```bash
 python manage.py runserver
 ```
