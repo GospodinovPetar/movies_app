@@ -31,7 +31,6 @@
                         <td>{{ movie.year }}</td>
                         <td>{{ movie.description }}</td>
                         <td>
-                            <a href="{% url 'edit_movie' movie.id %}" class = "button-link">Edit</a> |
                             <a href="{% url 'delete_movie' movie.id %}" class = "button-link" onclick="return confirm('Are you sure?');">Delete</a>
                         </td>
                     </tr>
