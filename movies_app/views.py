@@ -6,14 +6,11 @@ from .utils import generate_movie, TMDB_API_KEY, TMDB_BASE_URL
 
 
 def movie_list(request):
-    """
-    Displays movies ordered by newest first (i.e. descending by id) with pagination (5 movies per page),
-    along with any recommended movie.
-    """
-    movies = Movie.objects.all().order_by('-id')  # Newest movies first
+    movies = Movie.objects.all().order_by('-id')
     paginator = Paginator(movies, 3)  # 3 movies per page
 
     page = request.GET.get('page')
+    
     try:
         movies_page = paginator.page(page)
     except PageNotAnInteger:
@@ -26,12 +23,6 @@ def movie_list(request):
 
 
 def add_movie_to_list(request):
-    """
-    Adds the recommended movie to the database.
-    It fetches detailed genre information from TMDb using the stored tmdb_id,
-    and then saves the movie with up to three genres.
-    Only the primary genre (first genre from TMDb) is mandatory.
-    """
     recommended = request.session.get("recommended_movie", None)
 
     if recommended:
@@ -54,7 +45,6 @@ def add_movie_to_list(request):
         secondary_genre = genres[1] if len(genres) > 1 else ""
         third_genre = genres[2] if len(genres) > 2 else ""
 
-        # Add the movie only if it doesn't already exist
         if not Movie.objects.filter(title=recommended["title"]).exists():
             Movie.objects.create(
                 title=recommended["title"],
@@ -72,47 +62,18 @@ def add_movie_to_list(request):
 
 
 def generate_movie_view(request):
-    """
-    View to generate a recommended movie.
-    """
+    #View to generate a recommended movie
     generate_movie(request)
     return redirect("movie_list")
 
 
 def delete_movie(request, movie_id):
-    """
-    Deletes a movie from the database.
-    """
     movie = get_object_or_404(Movie, id=movie_id)
     movie.delete()
     return redirect("movie_list")
 
 
-def edit_movie(request, movie_id):
-    """
-    Edit an existing movie's details.
-    """
-    movie = get_object_or_404(Movie, id=movie_id)
-
-    if request.method == "POST":
-        movie.title = request.POST.get("title")
-        movie.primary_genre = request.POST.get("primary_genre")
-        movie.secondary_genre = request.POST.get("secondary_genre") or ""
-        movie.third_genre = request.POST.get("third_genre") or ""
-        movie.year = int(request.POST.get("year"))
-        movie.description = request.POST.get("description")
-        movie.save()
-        return redirect("movie_list")
-
-    return render(request, "edit_movie.html", {"movie": movie})
-
-
 def add_movie_view(request):
-    """
-    Allows the user to add a movie by entering only the movie title.
-    The view searches TMDb for the movie, fetches full details (including genres),
-    and then saves the movie to the database.
-    """
     if request.method == "POST":
         movie_title = request.POST.get("title", "").strip()
         if not movie_title:
@@ -140,7 +101,6 @@ def add_movie_view(request):
         if not results:
             return render(request, "add_movie.html", {"error": "No movie found with that title."})
 
-        # Use the first result as the best match
         best_match = results[0]
         tmdb_id = best_match.get("id")
 
