@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from movies_app.models import Movie
 
-TMDB_API_KEY = "d357c7bb97078beca9b74338cb621a59"
+TMDB_API_KEY = "aac029ad110fb99edc957a3c480002a6"
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
 
@@ -191,21 +191,6 @@ def add_movie_to_db(title, genre, year, description):
         year = year,
         description = description
     )
-
-def edit_movie(request, movie_id):
-    """Edits a movie's details."""
-    movie = get_object_or_404(Movie, id=movie_id)
-
-    if request.method == "POST":
-        movie.title = request.POST["title"]
-        movie.genre = request.POST["genre"]
-        movie.year = int(request.POST["year"])
-        movie.description = request.POST["description"]
-        movie.save()
-        
-        return redirect("movie_list")
-
-    return render(request, "edit_movie.html", {"movie": movie})
 
 def delete_movie(request, movie_id):
     """Deletes a movie from the database."""

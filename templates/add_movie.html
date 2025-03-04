@@ -8,17 +8,6 @@
 </head>
 <body>
     <h2>Add a Movie</h2>
-
-    {% if error %}
-        <p style="color:red;">{{ ea<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add a Movie</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <h2>Add a Movie</h2>
     {% if error %}
         <p style="color:red;">{{ error }}</p>
     {% endif %}
@@ -28,19 +17,9 @@
         <input type="text" id="title" name="title" required>
         <button type="submit">Add Movie</button>
     </form>
-    <a href="{% url 'movie_list' %}">Back to Movie List</a>
 </body>
 </html>
-rror }}</p>
-    {% endif %}
 
-    <form method="post">
-        {% csrf_token %}
-        <label for="title">Movie Title:</label>
-        <input type="text" id="title" name="title" required>
-        <button type="submit">Add Movie</button>
-    </form>
-
-    <a href="{% url 'movie_list' %}">Back to Movie List</a>
+    <a href="{% url 'movie_list' %}" class = button-link>Back to Movie List</a>
 </body>
 </html>
