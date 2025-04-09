@@ -2,10 +2,8 @@
 
 A Django web application for managing a list of movies. Users can **add** movies manually with up to three genres (where the primary genre is required, and secondary and third genres are optional) or **generate** a personalized movie recommendation with a single button click. The recommendation system analyzes your movie collection and fetches a highly-rated movie from The Movie Database (TMDb) that matches your dominant genre combination.
 
-Click here to see the demo of the app <br>
-<a href="https://www.youtube.com/watch?v=AcFWwOKz7fc" target="_blank">
-  <img src="https://img.youtube.com/vi/AcFWwOKz7fc/0.jpg" alt="Watch the video" />
-</a>
+Here is a video of the app and how it works: <br>
+[![Demo](https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DAcFWwOKz7fc)](https://www.youtube.com/watch?v=AcFWwOKz7fc)
 
 
 # 📌 Algorithm Description
