@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from movies_app.models import Movie
 
-TMDB_API_KEY = "aac029ad110fb99edc957a3c480002a6"
+TMDB_API_KEY = "ee2f41a532d22c126235419787ea5f9c"
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 
 
