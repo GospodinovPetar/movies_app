@@ -111,3 +111,4 @@ Visit http://127.0.0.1:8000/ to access the app.
 - Make the logic of the code more readable, easier to understand and follow and overall optimizing the code and the logic
 - Add a search bar, enhace fall back logic on the algorithm, when we can't find anything good with the parameters given.
 
+> _Created by Petar Gospodinov_  
